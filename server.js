@@ -1,44 +1,111 @@
 const express = require('express');
 const http = require('http');
+const WebSocket = require('ws');
 const path = require('path');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ===================== HOLAT =====================
 let sensorData = {
-  a: { temps: [25.8, 25.7, 24.8, 27.0], relays: [false, false, false, false] },
-  b: { temps: [25.2, 24.6, 26.4, 23.9], relays: [false, false, false, false] }
+  esp1: { temps: [null,null,null,null], relays: [false,false,false,false], lastSeen: null },
+  esp2: { temps: [null,null,null,null], relays: [false,false,false,false], lastSeen: null }
 };
 
-// ===================== API =====================
+let schedule = { active: false, interval: null, ventsOn: false, startTime: null };
+let scheduleTimer = null;
+
+function broadcast(data) {
+  wss.clients.forEach(client => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify(data));
+    }
+  });
+}
+
+// ESP dan ma'lumot qabul qilish
 app.post('/api/data', (req, res) => {
   const d = req.body;
-  const sektor = d.device_id === 1 ? 'a' : 'b';
-  
-  sensorData[sektor].temps = d.temps || sensorData[sektor].temps;
-  sensorData[sektor].relays = d.relays || sensorData[sektor].relays;
+  const key = d.device_id === 1 ? 'esp1' : 'esp2';
 
-  console.log(`\n[${new Date().toLocaleTimeString()}] ESP #${d.device_id}:`);
-  console.log(`  Temps: ${d.temps.join(', ')}°C`);
-  console.log(`  Relays: ${d.relays.map(r => r?'ON':'OFF').join(', ')}`);
+  sensorData[key] = {
+    temps: d.temps,
+    relays: d.relays,
+    lastSeen: new Date().toLocaleTimeString('uz', {
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
+    })
+  };
 
-  res.json({ status: 'ok', relays: sensorData[sektor].relays });
+  console.log([ESP#${d.device_id}] T:${d.temps.map(t => t + '°C').join(' ')});
+  broadcast({ type: 'sensorData', data: sensorData });
+  res.json({ status: 'ok' });
 });
+
+// Relay boshqaruv
+app.post('/api/relay', (req, res) => {
+  const { esp, index, state } = req.body;
+  const key = esp === 1 ? 'esp1' : 'esp2';
+  sensorData[key].relays[index] = state;
+  broadcast({ type: 'sensorData', data: sensorData });
+  console.log([Relay] ESP#${esp} Rele${index + 1} -> ${state ? 'ON' : 'OFF'});
+  res.json({ status: 'ok' });
+});
+
+// Jadval boshqaruv
+app.post('/api/schedule', (req, res) => {
+  const { action, interval } = req.body;
+
+  if (action === 'start') {
+    if (scheduleTimer) clearInterval(scheduleTimer);
+    schedule = { active: true, interval, ventsOn: true, startTime: Date.now() };
+    setAllRelays(true);
+    broadcast({ type: 'schedule', data: schedule });
+    console.log([Jadval] ${interval} daqiqa boshlandi);
+
+    scheduleTimer = setInterval(() => {
+      schedule.ventsOn = !schedule.ventsOn;
+      schedule.startTime = Date.now();
+      setAllRelays(schedule.ventsOn);
+      broadcast({ type: 'schedule', data: schedule });
+      console.log([Jadval] Ventilyatorlar ${schedule.ventsOn ? 'YONDI' : "O'CHDI"});
+    }, interval * 60 * 1000);
+
+  } else if (action === 'stop') {
+    if (scheduleTimer) clearInterval(scheduleTimer);
+    scheduleTimer = null;
+    schedule = { active: false, interval: null, ventsOn: false, startTime: null };
+    setAllRelays(false);
+    broadcast({ type: 'schedule', data: schedule });
+    console.log('[Jadval] Toxtatildi');
+  }
+
+  res.json({ status: 'ok' });
+});
+
+function setAllRelays(state) {
+  ['esp1', 'esp2'].forEach(key => {
+    sensorData[key].relays = [state, state, state, state];
+  });
+  broadcast({ type: 'sensorData', data: sensorData });
+}
 
 app.get('/api/status', (req, res) => {
-  res.json(sensorData);
+  res.json({ sensorData, schedule });
 });
 
-// ===================== SERVER =====================
+wss.on('connection', (ws) => {
+  console.log('[WS] Dashboard ulandi');
+  ws.send(JSON.stringify({ type: 'sensorData', data: sensorData }));
+  ws.send(JSON.stringify({ type: 'schedule', data: schedule }));
+});
+
 server.listen(PORT, () => {
-  console.log('================================');
-  console.log(` Multi-ESP Greenhouse Backend`);
-  console.log(` Dashboard: http://localhost:${PORT}`);
-  console.log(` Port: ${PORT}`);
-  console.log('================================');
+  console.log('=====================================');
+  console.log('  Issiqxona server ishga tushdi!');
+  console.log(  Port: ${PORT});
+  console.log('=====================================');
 });
