@@ -3,212 +3,469 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GREENHOUSE Dashboard</title>
+<title>Issiqxona monitoring</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI','Helvetica Neue',sans-serif;background:#f5f5f5;color:#333;padding:24px}
-.container{max-width:1400px;margin:0 auto}
-.header{margin-bottom:32px}
-.title{font-size:28px;font-weight:600;color:#2c3e50;margin-bottom:4px}
-.subtitle{font-size:13px;color:#7f8c8d}
-.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
-@media(max-width:900px){.summary{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.summary{grid-template-columns:1fr}}
-.summary-card{background:white;border-radius:10px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,0.08);border-left:4px solid}
-.summary-card.avg{border-left-color:#1a5f3c}
-.summary-card.max{border-left-color:#e74c3c}
-.summary-card.min{border-left-color:#27ae60}
-.summary-card.fan{border-left-color:#f39c12}
-.summary-label{font-size:11px;color:#7f8c8d;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px}
-.summary-value{font-size:32px;font-weight:600;color:#2c3e50;font-family:monospace;margin-bottom:2px}
-.summary-unit{font-size:12px;color:#95a5a6}
-.fan-status{font-size:13px;color:#7f8c8d;margin-top:4px}
-.section-title{font-size:14px;font-weight:600;color:#2c3e50;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;margin-top:28px;padding-bottom:8px;border-bottom:2px solid #ecf0f1}
-.sektors{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:900px){.sektors{grid-template-columns:1fr}}
-.sektor{background:white;border-radius:10px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.08);border-top:3px solid #1a5f3c}
-.sektor-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #ecf0f1}
-.sektor-name{font-size:16px;font-weight:600;color:#2c3e50}
-.sektor-temp{font-size:18px;font-weight:600;color:#1a5f3c;font-family:monospace}
-.sensors{display:flex;flex-direction:column;gap:10px}
-.sensor-row{display:grid;grid-template-columns:130px 1fr 80px 60px;gap:12px;align-items:center;padding:10px;background:#f8f9fa;border-radius:6px}
-.sensor-label{font-size:12px;color:#7f8c8d;font-weight:500}
-.sensor-bar{height:5px;background:#ecf0f1;border-radius:3px;position:relative}
-.sensor-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#1a5f3c,#0d3d25);width:75%}
-.sensor-value{font-size:13px;font-weight:600;color:#2c3e50;font-family:monospace;text-align:right}
-.sensor-btn{padding:5px 10px;border:1px solid #bdc3c7;border-radius:4px;background:white;color:#7f8c8d;font-size:11px;font-weight:500;cursor:pointer;transition:all 0.2s}
-.sensor-btn:hover{background:#ecf0f1}
-.sensor-btn.on{background:#1a5f3c;color:white;border-color:#1a5f3c}
-.fik-box{background:white;border-radius:10px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin-bottom:24px}
-.fik-header{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #ecf0f1}
-.fik-title{font-size:14px;font-weight:600;color:#2c3e50;text-transform:uppercase;letter-spacing:0.8px}
-.fik-desc{font-size:12px;color:#7f8c8d;margin-top:4px}
-.fik-intervals{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
-@media(max-width:600px){.fik-intervals{grid-template-columns:1fr}}
-.fik-interval{background:#f8f9fa;border:1px solid #ecf0f1;border-radius:6px;padding:14px;text-align:center;cursor:pointer;transition:all 0.2s}
-.fik-interval:hover{background:#ecf0f1;border-color:#bdc3c7}
-.fik-interval.active{background:#1a5f3c;border-color:#1a5f3c;color:white}
-.fik-interval-time{font-size:11px;color:#7f8c8d;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px}
-.fik-interval-drop{font-size:20px;font-weight:600;font-family:monospace;color:#2c3e50}
-.fik-interval.active .fik-interval-drop{color:white}
-.fik-interval.active .fik-interval-time{color:rgba(255,255,255,0.8)}
-.fik-chart{height:200px;background:#f8f9fa;border-radius:6px;display:flex;align-items:flex-end;justify-content:space-around;padding:20px;gap:10px}
-.chart-bar{flex:1;background:linear-gradient(180deg,#1a5f3c,#0d3d25);border-radius:4px 4px 0 0;min-height:20px;position:relative;transition:all 0.3s}
-.chart-label{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:10px;color:#7f8c8d}
-.events-box{background:white;border-radius:10px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-.events-title{font-size:14px;font-weight:600;color:#2c3e50;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px}
-.events-list{max-height:240px;overflow-y:auto}
-.event-item{display:flex;gap:12px;padding:10px;border-bottom:1px solid #ecf0f1;font-size:12px}
-.event-time{color:#95a5a6;font-family:monospace;min-width:70px}
-.event-msg{color:#7f8c8d;flex:1}
-.event-msg.success{color:#27ae60}
-.event-msg.warning{color:#f39c12}
-.event-msg.error{color:#e74c3c}
+:root{
+  --g50:#EAF3DE;--g100:#C0DD97;--g200:#97C459;--g400:#639922;--g600:#3B6D11;--g800:#27500A;--g900:#173404;
+  --a50:#FAEEDA;--a100:#FAC775;--a400:#BA7517;--a600:#854F0B;
+  --r50:#FCEBEB;--r200:#F09595;--r400:#E24B4A;--r600:#A32D2D;
+  --t400:#1D9E75;--t600:#0F6E56;--t800:#085041;
+  --warn:#F59E0B;
+}
+body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-height:100vh}
+.wrap{max-width:960px;margin:0 auto;padding:1.25rem}
+ 
+/* HEADER */
+.hdr{display:flex;align-items:center;justify-content:space-between;padding-bottom:1rem;margin-bottom:1rem;border-bottom:1px solid #d4e6b5}
+.hdr-left{display:flex;align-items:center;gap:10px}
+.hdr-icon{width:40px;height:40px;border-radius:10px;background:var(--g600);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px}
+.hdr-title{font-size:18px;font-weight:500;color:var(--g900)}
+.hdr-sub{font-size:12px;color:var(--g600);margin-top:2px}
+.conn-pill{display:flex;align-items:center;gap:5px;border-radius:20px;padding:4px 12px;font-size:12px;font-weight:500;transition:all .3s}
+.conn-pill.ok{background:var(--g50);border:1px solid #c0dd97;color:var(--g800)}
+.conn-pill.err{background:#fff0f0;border:1px solid #f7c1c1;color:var(--r600)}
+.conn-dot{width:7px;height:7px;border-radius:50%;animation:blink 2s infinite}
+.conn-dot.green{background:var(--g400)}
+.conn-dot.red{background:var(--r400)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+ 
+/* ALERT BANNER */
+.alert-wrap{margin-bottom:1rem;display:flex;flex-direction:column;gap:6px}
+.alert{display:flex;align-items:center;gap:10px;padding:.75rem 1rem;border-radius:10px;font-size:13px;font-weight:500;animation:slideIn .3s ease}
+@keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.alert.warn{background:#FFF8E7;border:1px solid #FCD34D;color:#92400E}
+.alert.success{background:#ECFDF5;border:1px solid #6EE7B7;color:#065F46}
+.alert.info{background:#EFF6FF;border:1px solid #93C5FD;color:#1E40AF}
+.alert-icon{font-size:18px}
+ 
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem}
+.stat{background:#fff;border:1px solid #d4e6b5;border-radius:10px;padding:.875rem 1rem}
+.stat-ico{font-size:18px;color:var(--g400);margin-bottom:5px}
+.stat-label{font-size:11px;color:var(--g600);margin-bottom:3px;font-weight:500}
+.stat-val{font-size:20px;font-weight:500;color:var(--g900)}
+.stat-unit{font-size:12px;color:var(--g600);font-weight:400}
+ 
+/* SECTION */
+.sec-label{font-size:11px;font-weight:600;color:var(--g600);letter-spacing:.06em;margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
+.sec-label::after{content:'';flex:1;height:1px;background:#d4e6b5}
+ 
+/* SECTORS */
+.sectors{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+.scard{background:#fff;border:1px solid #d4e6b5;border-radius:12px;overflow:hidden;transition:border-color .3s}
+.scard.disconnected{border-color:#f7c1c1;opacity:.85}
+.scard.autonomous{border-color:var(--warn)}
+.scard-hdr{padding:.75rem 1rem;display:flex;align-items:center;justify-content:space-between;transition:background .3s}
+.scard-hdr.normal{background:var(--g50);border-bottom:1px solid #d4e6b5}
+.scard-hdr.autonomous{background:#FFF8E7;border-bottom:1px solid #FCD34D}
+.scard-hdr.disconnected{background:#fff0f0;border-bottom:1px solid #f7c1c1}
+.scard-title{font-size:13px;font-weight:500;color:var(--g800);display:flex;align-items:center;gap:6px}
+.scard-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.scard-avg{font-size:14px;font-weight:500}
+.scard-status{font-size:11px;padding:2px 8px;border-radius:6px;font-weight:500}
+.scard-status.normal{background:var(--g50);color:var(--g600)}
+.scard-status.autonomous{background:#FFF8E7;color:#92400E}
+.scard-status.disconnected{background:#fff0f0;color:var(--r600)}
+.scard-lastseen{font-size:10px;color:var(--g400)}
+.scard-body{padding:.5rem .875rem}
+ 
+.srow{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f5e8}
+.srow:last-child{border-bottom:none}
+.srow-name{font-size:12px;color:var(--g600);display:flex;align-items:center;gap:5px}
+.srow-right{display:flex;align-items:center;gap:8px}
+.tbar-wrap{width:50px;height:5px;background:#eef5e3;border-radius:3px;overflow:hidden}
+.tbar{height:5px;border-radius:3px;transition:width .4s}
+.tval{font-size:13px;font-weight:500;min-width:46px;text-align:right}
+.tog{border:1px solid #c0dd97;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:500;cursor:pointer;background:#fff;color:var(--g600);min-width:42px;text-align:center;transition:all .15s}
+.tog:hover{background:var(--g50)}
+.tog.on{background:var(--g600);color:#fff;border-color:var(--g600)}
+.tog:disabled{opacity:.4;cursor:not-allowed}
+.no-signal{font-size:12px;color:var(--g400);padding:12px 0;text-align:center;font-style:italic}
+ 
+/* SCHEDULE */
+.sched-wrap{background:#fff;border:1px solid #d4e6b5;border-radius:12px;padding:1rem;margin-bottom:1rem}
+.sched-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:.875rem}
+.sbtn{padding:10px 0;border:1px solid #c0dd97;border-radius:8px;background:#fff;color:var(--g800);font-size:13px;font-weight:500;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .15s}
+.sbtn:hover{background:var(--g50)}
+.sbtn.active{background:var(--g600);color:#fff;border-color:var(--g600)}
+.sbtn-sub{font-size:11px;color:var(--g400);font-weight:400}
+.sbtn.active .sbtn-sub{color:#c0dd97}
+.sched-info-box{background:var(--g50);border:1px solid #c0dd97;border-radius:8px;padding:.75rem 1rem;font-size:13px;color:var(--g800);display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:.75rem}
+.stop-btn{border:1px solid #c0dd97;border-radius:6px;padding:4px 12px;font-size:12px;color:var(--g600);background:#fff;cursor:pointer}
+.stop-btn:hover{background:var(--g50)}
+.prog-outer{height:6px;background:#eef5e3;border-radius:4px;overflow:hidden}
+.prog-inner{height:6px;border-radius:4px;background:var(--g400);transition:width .8s linear}
+ 
+/* LOG */
+.log-wrap{background:#fff;border:1px solid #d4e6b5;border-radius:12px;padding:1rem}
+.lrow{display:flex;gap:10px;padding:5px 0;font-size:12px;border-bottom:1px solid #f0f5e8}
+.lrow:last-child{border-bottom:none}
+.ltime{color:var(--g400);min-width:68px}
+.lmsg{color:var(--g900)}
+.lmsg.good{color:var(--t600)}
+.lmsg.warn{color:#92400E}
+.lmsg.err{color:var(--r600)}
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="header">
-    <div class="title">🌿 GREENHOUSE</div>
-    <div class="subtitle">Aqlli issiqxona monitoring tizimi</div>
-  </div>
-  <div class="summary">
-    <div class="summary-card avg">
-      <div class="summary-label">Umumiy o'rtacha</div>
-      <div class="summary-value" id="avgTemp">24.5<span class="summary-unit">°C</span></div>
-    </div>
-    <div class="summary-card max">
-      <div class="summary-label">Eng yuqori</div>
-      <div class="summary-value" id="maxTemp">27.0<span class="summary-unit">°C</span></div>
-    </div>
-    <div class="summary-card min">
-      <div class="summary-label">Eng past</div>
-      <div class="summary-value" id="minTemp">23.9<span class="summary-unit">°C</span></div>
-    </div>
-    <div class="summary-card fan">
-      <div class="summary-label">Yoqilgan vaqt</div>
-      <div class="summary-value" id="fanTime">0<span class="summary-unit">s</span></div>
-      <div class="fan-status" id="fanStatus">OFF</div>
+<div class="wrap">
+ 
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-left">
+    <div class="hdr-icon"><i class="ti ti-plant-2"></i></div>
+    <div>
+      <div class="hdr-title">Issiqxona monitoring</div>
+      <div class="hdr-sub">Gidroponik tizim — ventilator boshqaruvi</div>
     </div>
   </div>
-  <div class="section-title">Sektorlar — Harorat va boshqaruv</div>
-  <div class="sektors">
-    <div class="sektor">
-      <div class="sektor-header">
-        <div>
-          <div class="sektor-name">🏢 Sektor A — ESP #1</div>
-        </div>
-        <div class="sektor-temp" id="tempA">25.8°C</div>
-      </div>
-      <div class="sensors">
-        <div class="sensor-row">
-          <div class="sensor-label">🌡 Datchik 1</div>
-          <div class="sensor-bar"><div class="sensor-fill"></div></div>
-          <div class="sensor-value" id="a1">25.8°C</div>
-          <button class="sensor-btn" id="ar1" onclick="toggleRelay('a',1)">OFF</button>
-        </div>
-        <div class="sensor-row">
-          <div class="sensor-label">🌡 Datchik 2</div>
-          <div class="sensor-bar"><div class="sensor-fill"></div></div>
-          <div class="sensor-value" id="a2">25.7°C</div>
-          <button class="sensor-btn" id="ar2" onclick="toggleRelay('a',2)">OFF</button>
-        </div>
-        <div class="sensor-row">
-          <div class="sensor-label">🌡 Datchik 3</div>
-          <div class="sensor-bar"><div class="sensor-fill"></div></div>
-          <div class="sensor-value" id="a3">24.8°C</div>
-          <button class="sensor-btn" id="ar3" onclick="toggleRelay('a',3)">OFF</button>
-        </div>
-        <div class="sensor-row">
-          <div class="sensor-label">🌡 Datchik 4</div>
-          <div class="sensor-bar"><div class="sensor-fill"></div></div>
-          <div class="sensor-value" id="a4">27.0°C</div>
-          <button class="sensor-btn" id="ar4" onclick="toggleRelay('a',4)">OFF</button>
-        </div>
-      </div>
-    </div>
-    <div class="sektor">
-      <div class="sektor-header">
-        <div>
-          <div class="sektor-name">🏢 Sektor B — ESP #2</div>
-        </div>
-        <div class="sektor-temp" id="tempB">24.8°C</div>
-      </div>
-      <div class="sensors">
-        <div class="sensor-row">
-          <div class="sensor-label">🌡 Datchik 1</div>
-          <div class="sensor-bar"><div class="sensor-fill"></div></div>
-          <div class="sensor-value" id="b1">25.2°C</div>
-          <button class="sensor-btn" id="br1" onclick="toggleRelay('b',1)">OFF</button>
-        </div>
-        <div class="sensor-row">
-          <div class="sensor-label">🌡 Datchik 2</div>
-          <div class="sensor-bar"><div class="sensor-fill"></div></div>
-          <div class="sensor-value" id="b2">24.6°C</div>
-          <button class="sensor-btn" id="br2" onclick="toggleRelay('b',2)">OFF</button>
-        </div>
-        <div class="sensor-row">
-          <div class="sensor-label">🌡 Datchik 3</div>
-          <div class="sensor-bar"><div class="sensor-fill"></div></div>
-          <div class="sensor-value" id="b3">26.4°C</div>
-          <button class="sensor-btn" id="br3" onclick="toggleRelay('b',3)">OFF</button>
-        </div>
-        <div class="sensor-row">
-          <div class="sensor-label">🌡 Datchik 4</div>
-          <div class="sensor-bar"><div class="sensor-fill"></div></div>
-          <div class="sensor-value" id="b4">23.9°C</div>
-          <button class="sensor-btn" id="br4" onclick="toggleRelay('b',4)">OFF</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="fik-box">
-    <div class="fik-header">
-      <div class="fik-title">🌀 Ventilyator samaradorligi (FIK)</div>
-      <div class="fik-desc">Ventilator ishlashining haroratga ta'siri</div>
-    </div>
-    <div class="fik-intervals">
-      <div class="fik-interval active" onclick="selectInterval(15)">
-        <div class="fik-interval-time">⏱ 15 daqiqa</div>
-        <div class="fik-interval-drop" id="drop15">-1.2°C</div>
-      </div>
-      <div class="fik-interval" onclick="selectInterval(25)">
-        <div class="fik-interval-time">⏱ 25 daqiqa</div>
-        <div class="fik-interval-drop" id="drop25">-1.8°C</div>
-      </div>
-      <div class="fik-interval" onclick="selectInterval(40)">
-        <div class="fik-interval-time">⏱ 40 daqiqa</div>
-        <div class="fik-interval-drop" id="drop40">-2.5°C</div>
-      </div>
-    </div>
-    <div class="fik-chart" id="fikChart">
-      <div class="chart-bar" style="height:30%"><div class="chart-label">Min</div></div>
-      <div class="chart-bar" style="height:55%"><div class="chart-label">O'rta</div></div>
-      <div class="chart-bar" style="height:100%"><div class="chart-label">Max</div></div>
-      <div class="chart-bar" style="height:42%"><div class="chart-label">Hozir</div></div>
-    </div>
-  </div>
-  <div class="section-title">Hodisalar</div>
-  <div class="events-box">
-    <div class="events-title">Tizim jurnali</div>
-    <div class="events-list" id="eventsList">
-      <div class="event-item"><div class="event-time">12:34</div><div class="event-msg success">Sektor A Rele 1 YOQILDI</div></div>
-      <div class="event-item"><div class="event-time">12:32</div><div class="event-msg">Ventilyator YOQILDI (25 daqiqa rejimi)</div></div>
-      <div class="event-item"><div class="event-time">12:25</div><div class="event-msg warning">Harorat yuqori: 27.5°C</div></div>
-      <div class="event-item"><div class="event-time">12:10</div><div class="event-msg success">Tizim ishga tushdi</div></div>
-    </div>
+  <div class="conn-pill ok" id="conn-pill">
+    <div class="conn-dot green" id="conn-dot"></div>
+    <span id="conn-text">Ulanmoqda...</span>
   </div>
 </div>
+ 
+<!-- ALERT BANNERS -->
+<div class="alert-wrap" id="alert-wrap"></div>
+ 
+<!-- STATS -->
+<div class="sec-label">UMUMIY KO'RSATKICHLAR</div>
+<div class="stats">
+  <div class="stat"><div class="stat-ico"><i class="ti ti-thermometer"></i></div><div class="stat-label">O'rtacha harorat</div><div class="stat-val" id="s-avg">—<span class="stat-unit">°C</span></div></div>
+  <div class="stat"><div class="stat-ico" style="color:#a32d2d"><i class="ti ti-arrow-up"></i></div><div class="stat-label">Eng yuqori</div><div class="stat-val" id="s-max" style="color:#a32d2d">—<span class="stat-unit">°C</span></div></div>
+  <div class="stat"><div class="stat-ico" style="color:var(--t400)"><i class="ti ti-arrow-down"></i></div><div class="stat-label">Eng past</div><div class="stat-val" id="s-min" style="color:var(--t600)">—<span class="stat-unit">°C</span></div></div>
+  <div class="stat"><div class="stat-ico" style="color:var(--a400)"><i class="ti ti-wind"></i></div><div class="stat-label">Yoniq ventilyator</div><div class="stat-val" id="s-on" style="color:var(--a600)">0<span class="stat-unit">/8</span></div></div>
+</div>
+ 
+<!-- SECTORS -->
+<div class="sec-label">SEKTORLAR</div>
+<div class="sectors">
+  <div class="scard" id="card-a">
+    <div class="scard-hdr normal" id="hdr-a">
+      <div class="scard-title"><i class="ti ti-cpu" style="font-size:14px"></i>Sektor A — ESP #1</div>
+      <div class="scard-right">
+        <div class="scard-avg" id="avg-a">—°C</div>
+        <div class="scard-status normal" id="status-a">Signal kutilmoqda</div>
+        <div class="scard-lastseen" id="seen-a"></div>
+      </div>
+    </div>
+    <div class="scard-body" id="sens-a"><div class="no-signal">Signal kutilmoqda...</div></div>
+  </div>
+  <div class="scard" id="card-b">
+    <div class="scard-hdr normal" id="hdr-b">
+      <div class="scard-title"><i class="ti ti-cpu" style="font-size:14px"></i>Sektor B — ESP #2</div>
+      <div class="scard-right">
+        <div class="scard-avg" id="avg-b">—°C</div>
+        <div class="scard-status normal" id="status-b">Signal kutilmoqda</div>
+        <div class="scard-lastseen" id="seen-b"></div>
+      </div>
+    </div>
+    <div class="scard-body" id="sens-b"><div class="no-signal">Signal kutilmoqda...</div></div>
+  </div>
+</div>
+ 
+<!-- SCHEDULE -->
+<div class="sec-label">JADVAL BOSHQARUVI</div>
+<div class="sched-wrap">
+  <div class="sched-btns">
+    <button class="sbtn" id="btn-15" onclick="startSched(15)">
+      <i class="ti ti-clock" style="font-size:16px"></i>
+      <span>Har 15 daqiqa</span>
+      <span class="sbtn-sub">Tez aylanish</span>
+    </button>
+    <button class="sbtn" id="btn-25" onclick="startSched(25)">
+      <i class="ti ti-clock" style="font-size:16px"></i>
+      <span>Har 25 daqiqa</span>
+      <span class="sbtn-sub">O'rtacha</span>
+    </button>
+    <button class="sbtn" id="btn-40" onclick="startSched(40)">
+      <i class="ti ti-clock" style="font-size:16px"></i>
+      <span>Har 40 daqiqa</span>
+      <span class="sbtn-sub">Sekin aylanish</span>
+    </button>
+  </div>
+  <div class="sched-info-box">
+    <span id="sched-info">Jadval tanlanmagan — tugmani bosing</span>
+    <button class="stop-btn" id="stop-btn" onclick="stopSched()" style="display:none">
+      <i class="ti ti-player-pause" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>To'xtat
+    </button>
+  </div>
+  <div class="prog-outer" id="prog-outer" style="display:none">
+    <div class="prog-inner" id="prog-inner" style="width:0%"></div>
+  </div>
+</div>
+ 
+<!-- LOG -->
+<div class="sec-label">HODISALAR</div>
+<div class="log-wrap"><div id="log-list"><div class="lrow"><span class="lmsg" style="color:var(--g400)">Server ulanishi kutilmoqda...</span></div></div></div>
+ 
+</div>
+ 
 <script>
-let relays={a:[false,false,false,false],b:[false,false,false,false]};
-let fanState=false,selectedInterval=15,fanTime=0;
-function toggleRelay(s,n){relays[s][n-1]=!relays[s][n-1];updateRelayUI(s,n);addEvent(`Sektor ${s.toUpperCase()} Rele ${n} ${relays[s][n-1]?'YOQILDI':'O\'CHIRILDI'}`,relays[s][n-1]?'success':'');}
-function updateRelayUI(s,n){const b=document.getElementById(`${s}r${n}`);const o=relays[s][n-1];b.classList.toggle('on',o);b.textContent=o?'ON':'OFF';}
-function selectInterval(m){selectedInterval=m;document.querySelectorAll('.fik-interval').forEach(e=>e.classList.remove('active'));event.target.closest('.fik-interval').classList.add('active');}
-function updateTemps(){const t={a1:25.8,a2:25.7,a3:24.8,a4:27.0,b1:25.2,b2:24.6,b3:26.4,b4:23.9};Object.entries(t).forEach(([i,v])=>{const e=document.getElementById(i);const c=(Math.random()-0.5)*0.3;const n=Math.max(15,Math.min(35,v+c)).toFixed(1);e.textContent=n+'°C';});const a=Object.values(t);const av=(a.reduce((x,y)=>x+y)/a.length).toFixed(1);document.getElementById('avgTemp').textContent=av+'°C';document.getElementById('maxTemp').textContent=Math.max(...a).toFixed(1)+'°C';document.getElementById('minTemp').textContent=Math.min(...a).toFixed(1)+'°C';document.getElementById('tempA').textContent=((t.a1+t.a2+t.a3+t.a4)/4).toFixed(1)+'°C';document.getElementById('tempB').textContent=((t.b1+t.b2+t.b3+t.b4)/4).toFixed(1)+'°C';if(fanState)fanTime++;document.getElementById('fanTime').textContent=fanTime+'s';}
-function addEvent(m,c=''){const l=document.getElementById('eventsList');const ti=new Date().toLocaleTimeString('uz-UZ',{hour:'2-digit',minute:'2-digit'});const it=document.createElement('div');it.className='event-item';it.innerHTML=`<div class="event-time">${ti}</div><div class="event-msg ${c}">${m}</div>`;l.insertBefore(it,l.firstChild);if(l.children.length>15)l.removeChild(l.lastChild);}
-setInterval(updateTemps,2000);
-document.addEventListener('keydown',(e)=>{if(e.key===' '){fanState=!fanState;document.getElementById('fanStatus').textContent=fanState?'ISHLAYAPTI':'OFF';addEvent(`Ventilyator ${fanState?'YOQILDI':'O\'CHIRILDI'} (${selectedInterval} daqiqa rejimi)`);}});
+const WS_URL = `ws://${location.host}`;
+const TMIN=20, TMAX=36;
+const logs=[];
+ 
+// Holat
+let espState = {
+  esp1: { temps:[null,null,null,null], relays:[false,false,false,false], lastSeen:null, autonomous:false, connected:false },
+  esp2: { temps:[null,null,null,null], relays:[false,false,false,false], lastSeen:null, autonomous:false, connected:false }
+};
+ 
+// Jadval
+let schedMin=0, schedStart=0, schedVentsOn=false, schedActive=false, progTimer=null;
+ 
+// Alertlar
+let alerts = { esp1:'', esp2:'' };
+ 
+function ts(){ return new Date().toLocaleTimeString('uz',{hour:'2-digit',minute:'2-digit',second:'2-digit'}) }
+function addLog(msg, type=''){
+  logs.unshift({t:ts(), msg, type});
+  if(logs.length>12) logs.pop();
+  renderLogs();
+}
+ 
+function avg(arr){ const v=arr.filter(x=>x!==null); return v.length ? v.reduce((a,b)=>a+b,0)/v.length : null }
+function tColor(t){ return t>=30?'#A32D2D':t>=27?'#854F0B':'#27500A' }
+function tBarColor(t){ return t>=30?'#E24B4A':t>=27?'#EF9F27':'#639922' }
+function tBarPct(t){ return Math.round(((t-TMIN)/(TMAX-TMIN))*100) }
+ 
+function renderSectors(){
+  ['esp1','esp2'].forEach(key => {
+    const sec = key==='esp1' ? 'a' : 'b';
+    const espNum = key==='esp1' ? 1 : 2;
+    const d = espState[key];
+    const card = document.getElementById('card-'+sec);
+    const hdr = document.getElementById('hdr-'+sec);
+    const statusEl = document.getElementById('status-'+sec);
+    const avgEl = document.getElementById('avg-'+sec);
+    const seenEl = document.getElementById('seen-'+sec);
+    const sensEl = document.getElementById('sens-'+sec);
+ 
+    // Karta holati
+    if(!d.connected){
+      card.className='scard disconnected';
+      hdr.className='scard-hdr disconnected';
+      statusEl.className='scard-status disconnected';
+      statusEl.textContent='Aloqa uzildi';
+      sensEl.innerHTML='<div class="no-signal"><i class="ti ti-wifi-off" style="font-size:16px;vertical-align:-2px;margin-right:4px"></i>Signal yo\'q — avtonom rejimda</div>';
+      avgEl.textContent='—°C';
+      avgEl.style.color='#A32D2D';
+      seenEl.textContent = d.lastSeen ? 'Oxirgi: '+d.lastSeen : '';
+      return;
+    }
+ 
+    if(d.autonomous){
+      card.className='scard autonomous';
+      hdr.className='scard-hdr autonomous';
+      statusEl.className='scard-status autonomous';
+      statusEl.textContent='⚡ Avtonom rejim';
+    } else {
+      card.className='scard';
+      hdr.className='scard-hdr normal';
+      statusEl.className='scard-status normal';
+      statusEl.textContent='Normal';
+    }
+ 
+    const a = avg(d.temps);
+    avgEl.textContent = a!==null ? a.toFixed(1)+'°C' : '—°C';
+    avgEl.style.color = a!==null ? tColor(a) : var(--g600);
+    seenEl.textContent = d.lastSeen ? d.lastSeen : '';
+ 
+    sensEl.innerHTML = d.temps.map((t,i) => {
+      if(t===null) return '';
+      const disabled = d.autonomous ? 'disabled title="Avtonom rejimda boshqarib bo\'lmaydi"' : '';
+      return `<div class="srow">
+        <span class="srow-name"><i class="ti ti-thermometer" style="font-size:12px;color:#639922"></i>Datchik ${i+1}</span>
+        <div class="srow-right">
+          <div class="tbar-wrap"><div class="tbar" style="width:${tBarPct(t)}%;background:${tBarColor(t)}"></div></div>
+          <span class="tval" style="color:${tColor(t)}">${t.toFixed(1)}°C</span>
+          <button class="tog ${d.relays[i]?'on':''}" onclick="toggleRelay(${espNum},${i},${!d.relays[i]})" ${disabled}>${d.relays[i]?'ON':'OFF'}</button>
+        </div>
+      </div>`;
+    }).join('');
+  });
+ 
+  // Umumiy stats
+  const allTemps = [...espState.esp1.temps,...espState.esp2.temps].filter(x=>x!==null);
+  if(allTemps.length){
+    const a=avg(allTemps);
+    document.getElementById('s-avg').innerHTML=a.toFixed(1)+'<span class="stat-unit">°C</span>';
+    document.getElementById('s-max').innerHTML=Math.max(...allTemps).toFixed(1)+'<span class="stat-unit">°C</span>';
+    document.getElementById('s-min').innerHTML=Math.min(...allTemps).toFixed(1)+'<span class="stat-unit">°C</span>';
+  }
+  const onN=[...espState.esp1.relays,...espState.esp2.relays].filter(Boolean).length;
+  document.getElementById('s-on').innerHTML=onN+'<span class="stat-unit">/8</span>';
+}
+ 
+function renderAlerts(){
+  const wrap = document.getElementById('alert-wrap');
+  const items = [];
+ 
+  ['esp1','esp2'].forEach(key => {
+    const sektor = key==='esp1' ? 'A' : 'B';
+    const d = espState[key];
+    if(!d.connected && d.lastSeen){
+      items.push(`<div class="alert warn">
+        <i class="ti ti-wifi-off alert-icon"></i>
+        <span><b>Sektor ${sektor} aloqa uzildi</b> — ESP avtonom 15 daqiqalik rejimda ishlayapti</span>
+      </div>`);
+    } else if(d.autonomous){
+      items.push(`<div class="alert info">
+        <i class="ti ti-refresh alert-icon"></i>
+        <span><b>Sektor ${sektor} avtonom rejimda</b> — ventilyatorlar 15 daqiqalik jadvalda ishlayapti</span>
+      </div>`);
+    }
+  });
+ 
+  wrap.innerHTML = items.join('');
+}
+ 
+function showReconnectAlert(sektor){
+  const wrap = document.getElementById('alert-wrap');
+  const div = document.createElement('div');
+  div.className='alert success';
+  div.innerHTML=`<i class="ti ti-wifi alert-icon"></i><span><b>Sektor ${sektor} aloqa tiklandi!</b> — Endi boshqarishingiz mumkin</span>`;
+  wrap.prepend(div);
+  addLog(`Sektor ${sektor} aloqa tiklandi — boshqarishingiz mumkin`, 'good');
+  setTimeout(()=>{ div.remove(); renderAlerts(); }, 5000);
+}
+ 
+function renderLogs(){
+  document.getElementById('log-list').innerHTML = logs.length ?
+    logs.map(l=>`<div class="lrow"><span class="ltime">${l.t}</span><span class="lmsg ${l.type}">${l.msg}</span></div>`).join('') :
+    '<div class="lrow"><span class="lmsg" style="color:var(--g400)">Hozircha hodisa yo\'q</span></div>';
+}
+ 
+function toggleRelay(esp, index, state){
+  fetch('/api/relay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({esp,index,state})});
+  addLog(`Sektor ${esp===1?'A':'B'} — Ventilyator ${index+1} ${state?'YONDIRILDI':'O\'CHIRILDI'}`, state?'good':'');
+}
+ 
+function startSched(min){
+  fetch('/api/schedule',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'start',interval:min})});
+  schedMin=min; schedStart=Date.now(); schedVentsOn=true; schedActive=true;
+  ['btn-15','btn-25','btn-40'].forEach(id=>document.getElementById(id).classList.remove('active'));
+  document.getElementById('btn-'+min).classList.add('active');
+  document.getElementById('stop-btn').style.display='block';
+  document.getElementById('prog-outer').style.display='block';
+  addLog(`Jadval (${min} daqiqa) boshlandi — barcha ventilyatorlar YONDI`, 'good');
+  if(progTimer) clearInterval(progTimer);
+  progTimer=setInterval(updateProg,1000);
+}
+ 
+function stopSched(){
+  fetch('/api/schedule',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'stop'})});
+  schedActive=false;
+  if(progTimer) clearInterval(progTimer);
+  ['btn-15','btn-25','btn-40'].forEach(id=>document.getElementById(id).classList.remove('active'));
+  document.getElementById('stop-btn').style.display='none';
+  document.getElementById('prog-outer').style.display='none';
+  document.getElementById('sched-info').textContent='Jadval toxtatildi';
+  addLog('Jadval toxtatildi');
+}
+ 
+function updateProg(){
+  if(!schedActive) return;
+  const el=(Date.now()-schedStart)/1000, tot=schedMin*60;
+  if(el>=tot){ schedStart=Date.now(); schedVentsOn=!schedVentsOn; }
+  document.getElementById('prog-inner').style.width=Math.min((el/tot)*100,100).toFixed(1)+'%';
+  const rem=Math.max(0,tot-el), m=Math.floor(rem/60), s=Math.floor(rem%60);
+  document.getElementById('sched-info').textContent=
+    `Ventilyatorlar ${schedVentsOn?'YONIQ':"O'CHIQ"} — ${schedVentsOn?"o'chishga":'yonishga'} ${m}:${s.toString().padStart(2,'0')} qoldi`;
+}
+ 
+// WebSocket
+function connectWS(){
+  const ws = new WebSocket(WS_URL);
+ 
+  ws.onopen = () => {
+    const pill=document.getElementById('conn-pill');
+    pill.className='conn-pill ok';
+    document.getElementById('conn-dot').className='conn-dot green';
+    document.getElementById('conn-text').textContent='Server ulangan';
+    addLog('Server ga ulandi', 'good');
+  };
+ 
+  ws.onmessage = (e) => {
+    const msg = JSON.parse(e.data);
+ 
+    if(msg.type === 'sensorData'){
+      const d = msg.data;
+      ['esp1','esp2'].forEach(key => {
+        if(d[key]){
+          const wasConnected = espState[key].connected;
+          const wasAutonomous = espState[key].autonomous;
+          espState[key] = {
+            ...espState[key],
+            temps: d[key].temps || espState[key].temps,
+            relays: d[key].relays || espState[key].relays,
+            lastSeen: d[key].lastSeen || espState[key].lastSeen,
+            autonomous: d[key].autonomous || false,
+            connected: true
+          };
+          if(!wasConnected && espState[key].connected){
+            const sektor = key==='esp1'?'A':'B';
+            showReconnectAlert(sektor);
+          }
+          if(!wasAutonomous && espState[key].autonomous){
+            const sektor = key==='esp1'?'A':'B';
+            addLog(`Sektor ${sektor} avtonom 15 daqiqalik rejimga o'tdi`, 'warn');
+          }
+        }
+      });
+      renderSectors();
+      renderAlerts();
+    }
+ 
+    if(msg.type === 'connection'){
+      const key = msg.esp;
+      const sektor = key==='esp1'?'A':'B';
+      const wasConnected = espState[key].connected;
+      espState[key].connected = msg.connected;
+      if(!msg.connected){
+        addLog(`Sektor ${sektor} aloqa uzildi — avtonom rejimda`, 'err');
+      } else if(!wasConnected){
+        showReconnectAlert(sektor);
+      }
+      renderSectors();
+      renderAlerts();
+    }
+ 
+    if(msg.type === 'schedule'){
+      const sc = msg.data;
+      if(sc.active){
+        schedMin=sc.interval; schedStart=sc.startTime||Date.now();
+        schedVentsOn=sc.ventsOn; schedActive=true;
+        ['btn-15','btn-25','btn-40'].forEach(id=>document.getElementById(id).classList.remove('active'));
+        document.getElementById('btn-'+sc.interval).classList.add('active');
+        document.getElementById('stop-btn').style.display='block';
+        document.getElementById('prog-outer').style.display='block';
+        if(progTimer) clearInterval(progTimer);
+        progTimer=setInterval(updateProg,1000);
+      }
+    }
+  };
+ 
+  ws.onclose = () => {
+    const pill=document.getElementById('conn-pill');
+    pill.className='conn-pill err';
+    document.getElementById('conn-dot').className='conn-dot red';
+    document.getElementById('conn-text').textContent='Uzildi — qayta ulanmoqda...';
+    addLog('Server bilan aloqa uzildi', 'err');
+    setTimeout(connectWS, 3000);
+  };
+ 
+  ws.onerror = () => {
+    document.getElementById('conn-dot').className='conn-dot red';
+  };
+}
+ 
+connectWS();
+addLog('Dashboard yuklandi', 'good');
 </script>
 </body>
 </html>
+ 
