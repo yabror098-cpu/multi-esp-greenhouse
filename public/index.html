@@ -204,7 +204,7 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
 </div>
  
 <script>
-const WSS_URL = `wss://${location.host}`;
+const WS_URL = `wss://${location.host}`;
 const TMIN=20, TMAX=36;
 const logs=[];
  
@@ -271,7 +271,7 @@ function renderSectors(){
  
     const a = avg(d.temps);
     avgEl.textContent = a!==null ? a.toFixed(1)+'°C' : '—°C';
-    avgEl.style.color = a!==null ? tColor(a) : var(--g600);
+    avgEl.style.color = a!==null ? tColor(a) : 'var(--g600)';
     seenEl.textContent = d.lastSeen ? d.lastSeen : '';
  
     sensEl.innerHTML = d.temps.map((t,i) => {
