@@ -32,15 +32,24 @@ function broadcast(data) {
 app.post('/api/data', (req, res) => {
   const d = req.body;
   const key = d.device_id === 1 ? 'esp1' : 'esp2';
+
   sensorData[key] = {
     temps: d.temps,
     relays: d.relays,
     autonomous: d.autonomous || false,
-    lastSeen: new Date().toLocaleTimeString('uz', {hour:'2-digit',minute:'2-digit',second:'2-digit'})
+    lastSeen: new Date().toLocaleTimeString('uz', {
+      hour:'2-digit', minute:'2-digit', second:'2-digit'
+    })
   };
-  console.log(`[ESP#${d.device_id}] T:${d.temps.map(t=>t+'°C').join(' ')} | ${d.autonomous ? 'AVTONOM' : 'NORMAL'}`);
+
+  console.log(`[ESP#${d.device_id}] T:${d.temps.map(t=>t+'°C').join(' ')}`);
   broadcast({ type: 'sensorData', data: sensorData });
-  res.json({ status: 'ok' });
+
+  // ESP ga relay holatini qaytarish
+  res.json({ 
+    status: 'ok',
+    relays: sensorData[key].relays  // ← shu qator buyruqni yuboradi
+  });
 });
 
 // Relay boshqaruv
