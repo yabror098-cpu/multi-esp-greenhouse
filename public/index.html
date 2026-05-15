@@ -346,40 +346,67 @@ function toggleRelay(esp, index, state){
 
 let schedLoading = false;
 
+function setSchedBtnsDisabled(val){
+  ['btn-15','btn-25','btn-40'].forEach(id=>{
+    const b = document.getElementById(id);
+    b.disabled = val;
+    b.style.opacity = val ? '0.5' : '1';
+    b.style.cursor = val ? 'not-allowed' : 'pointer';
+  });
+  const sb = document.getElementById('stop-btn');
+  sb.disabled = val;
+  sb.style.opacity = val ? '0.5' : '1';
+}
+
+function applySchedUI(sc){
+  if(sc && sc.active){
+    schedMin = sc.interval;
+    schedStart = sc.startTime || Date.now();
+    schedVentsOn = sc.ventsOn;
+    schedActive = true;
+    ['btn-15','btn-25','btn-40'].forEach(id=>document.getElementById(id).classList.remove('active'));
+    document.getElementById('btn-'+sc.interval).classList.add('active');
+    document.getElementById('stop-btn').style.display = 'block';
+    document.getElementById('prog-outer').style.display = 'block';
+    if(progTimer) clearInterval(progTimer);
+    progTimer = setInterval(updateProg, 1000);
+  } else {
+    schedActive = false;
+    if(progTimer) clearInterval(progTimer);
+    ['btn-15','btn-25','btn-40'].forEach(id=>document.getElementById(id).classList.remove('active'));
+    document.getElementById('stop-btn').style.display = 'none';
+    document.getElementById('prog-outer').style.display = 'none';
+    document.getElementById('sched-info').textContent = 'Jadval toxtatildi';
+  }
+}
+
 function startSched(min){
   if(schedLoading) return;
   schedLoading = true;
-
-  // Tugmalarni o'chirib qo'y
-  ['btn-15','btn-25','btn-40'].forEach(id=>{
-    document.getElementById(id).disabled = true;
-    document.getElementById(id).style.opacity = '0.5';
-  });
+  setSchedBtnsDisabled(true);
   document.getElementById('sched-info').textContent = 'Yuklanmoqda...';
 
-  fetch('/api/schedule',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'start',interval:min})})
-  .then(r=>r.json())
-  .then(data=>{
+  fetch('/api/schedule', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({action:'start', interval:min})
+  })
+  .then(r => r.json())
+  .then(data => {
     if(data.status === 'ok'){
-      schedMin=min; schedStart=Date.now(); schedVentsOn=true; schedActive=true;
-      ['btn-15','btn-25','btn-40'].forEach(id=>document.getElementById(id).classList.remove('active'));
-      document.getElementById('btn-'+min).classList.add('active');
-      document.getElementById('stop-btn').style.display='block';
-      document.getElementById('prog-outer').style.display='block';
-      addLog(`Jadval (${min} daqiqa) boshlandi — barcha ventilyatorlar YONDI`, 'good');
-      if(progTimer) clearInterval(progTimer);
-      progTimer=setInterval(updateProg,1000);
+      addLog(`Jadval (${min} daqiqa) boshlandi`, 'good');
+      // UI ni server tasdiqlashi bilan WebSocket yangilaydi
+    } else {
+      addLog('Jadval xato: ' + (data.message||''), 'err');
+      document.getElementById('sched-info').textContent = 'Xato — qayta urining';
     }
   })
   .catch(()=>{
-    addLog('Xato: server ga ulanmadi', 'err');
-    document.getElementById('sched-info').textContent = 'Xato yuz berdi — qayta urining';
+    addLog('Server ga ulanmadi!', 'err');
+    document.getElementById('sched-info').textContent = 'Xato — qayta urining';
   })
   .finally(()=>{
-    ['btn-15','btn-25','btn-40'].forEach(id=>{
-      document.getElementById(id).disabled = false;
-      document.getElementById(id).style.opacity = '1';
-    });
+    setSchedBtnsDisabled(false);
     schedLoading = false;
   });
 }
@@ -387,31 +414,30 @@ function startSched(min){
 function stopSched(){
   if(schedLoading) return;
   schedLoading = true;
+  setSchedBtnsDisabled(true);
+  document.getElementById('sched-info').textContent = 'Toxtatilmoqda...';
 
-  document.getElementById('stop-btn').disabled = true;
-  document.getElementById('stop-btn').style.opacity = '0.5';
-  document.getElementById('sched-info').textContent = 'To\'xtatilmoqda...';
-
-  fetch('/api/schedule',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'stop'})})
-  .then(r=>r.json())
-  .then(data=>{
+  fetch('/api/schedule', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({action:'stop'})
+  })
+  .then(r => r.json())
+  .then(data => {
     if(data.status === 'ok'){
-      schedActive=false;
-      if(progTimer) clearInterval(progTimer);
-      ['btn-15','btn-25','btn-40'].forEach(id=>document.getElementById(id).classList.remove('active'));
-      document.getElementById('stop-btn').style.display='none';
-      document.getElementById('prog-outer').style.display='none';
-      document.getElementById('sched-info').textContent='Jadval toxtatildi';
       addLog('Jadval toxtatildi');
+      // UI ni WebSocket yangilaydi
+    } else {
+      addLog('Toxtatish xato', 'err');
+      document.getElementById('sched-info').textContent = 'Xato — qayta urining';
     }
   })
   .catch(()=>{
-    addLog('Xato: server ga ulanmadi', 'err');
-    document.getElementById('sched-info').textContent = 'Xato yuz berdi — qayta urining';
+    addLog('Server ga ulanmadi!', 'err');
+    document.getElementById('sched-info').textContent = 'Xato — qayta urining';
   })
   .finally(()=>{
-    document.getElementById('stop-btn').disabled = false;
-    document.getElementById('stop-btn').style.opacity = '1';
+    setSchedBtnsDisabled(false);
     schedLoading = false;
   });
 }
@@ -485,16 +511,7 @@ function connectWS(){
 
     if(msg.type === 'schedule'){
       const sc = msg.data;
-      if(sc.active){
-        schedMin=sc.interval; schedStart=sc.startTime||Date.now();
-        schedVentsOn=sc.ventsOn; schedActive=true;
-        ['btn-15','btn-25','btn-40'].forEach(id=>document.getElementById(id).classList.remove('active'));
-        document.getElementById('btn-'+sc.interval).classList.add('active');
-        document.getElementById('stop-btn').style.display='block';
-        document.getElementById('prog-outer').style.display='block';
-        if(progTimer) clearInterval(progTimer);
-        progTimer=setInterval(updateProg,1000);
-      }
+      applySchedUI(sc);
     }
   };
 
