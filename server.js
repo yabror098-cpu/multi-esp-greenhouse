@@ -19,7 +19,6 @@ let sensorData = {
 let schedule = { active:false, interval:null, ventsOn:false, startTime:null };
 let scheduleTimer = null;
 
-// Uzbekiston vaqti (UTC+5)
 function uzTime() {
   return new Date().toLocaleTimeString('uz', {
     hour:'2-digit', minute:'2-digit', second:'2-digit',
@@ -40,15 +39,13 @@ setInterval(() => {
   const hozir = Date.now();
   let ozgardi = false;
   ['esp1','esp2'].forEach(key => {
-    // 15 soniyadan keyin signal kelmasa uzilgan deb hisobla
     if (sensorData[key].connected && hozir - sensorData[key].lastUpdate > 15000) {
       sensorData[key].connected = false;
       sensorData[key].autonomous = true;
-      // Relay holatini tozala
       sensorData[key].relays = [false,false,false,false];
       ozgardi = true;
       const espNum = key === 'esp1' ? 1 : 2;
-      console.log(`[Aloqa] ESP#${espNum} UZILDI — relaylar tozalandi`);
+      console.log(`[Aloqa] ESP#${espNum} UZILDI`);
       broadcast({
         type: 'connection',
         esp: key,
@@ -75,7 +72,6 @@ app.post('/api/data', (req, res) => {
     lastUpdate: Date.now()
   };
 
-  // Aloqa tiklandi
   if (!wasConnected) {
     const sektor = key === 'esp1' ? 'A' : 'B';
     console.log(`[Aloqa] ESP#${d.device_id} TIKLANDI`);
@@ -96,18 +92,20 @@ app.post('/api/data', (req, res) => {
 app.get('/api/relay-status', (req, res) => {
   const id = parseInt(req.query.id);
   const key = id === 1 ? 'esp1' : 'esp2';
-  // Faqat ulangan ESP ga relay holati beriladi
   if (!sensorData[key].connected) {
-    return res.json({ relays:[false,false,false,false] });
+    return res.json({ relays:[false,false,false,false], schedule_active:false, schedule_vents_on:false });
   }
-  res.json({ relays: sensorData[key].relays });
+  res.json({
+    relays: sensorData[key].relays,
+    schedule_active: schedule.active,
+    schedule_vents_on: schedule.ventsOn
+  });
 });
 
 // Dashboard dan relay boshqaruv
 app.post('/api/relay', (req, res) => {
   const { esp, index, state } = req.body;
   const key = esp === 1 ? 'esp1' : 'esp2';
-  // Faqat ulangan ESP ni boshqarish mumkin
   if (!sensorData[key].connected) {
     return res.json({ status:'error', message:'ESP ulangan emas!' });
   }
@@ -131,6 +129,7 @@ app.post('/api/schedule', (req, res) => {
       schedule.startTime = Date.now();
       setAllRelays(schedule.ventsOn);
       broadcast({ type:'schedule', data:schedule });
+      console.log(`[Jadval] ${schedule.ventsOn ? 'YONDI' : "O'CHDI"}`);
     }, interval * 60 * 1000);
   } else if (action === 'stop') {
     if (scheduleTimer) clearInterval(scheduleTimer);
@@ -138,11 +137,12 @@ app.post('/api/schedule', (req, res) => {
     schedule = { active:false, interval:null, ventsOn:false, startTime:null };
     setAllRelays(false);
     broadcast({ type:'schedule', data:schedule });
+    console.log('[Jadval] Toxtatildi');
   }
   res.json({ status:'ok' });
 });
 
-// Aloqa holati (ESP dan)
+// Aloqa holati
 app.post('/api/connection', (req, res) => {
   const { device_id, connected } = req.body;
   const key = device_id === 1 ? 'esp1' : 'esp2';
