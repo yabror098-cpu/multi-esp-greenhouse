@@ -16,8 +16,6 @@
 }
 body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-height:100vh}
 .wrap{max-width:960px;margin:0 auto;padding:1.25rem}
-
-/* HEADER */
 .hdr{display:flex;align-items:center;justify-content:space-between;padding-bottom:1rem;margin-bottom:1rem;border-bottom:1px solid #d4e6b5}
 .hdr-left{display:flex;align-items:center;gap:10px}
 .hdr-icon{width:40px;height:40px;border-radius:10px;background:var(--g600);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px}
@@ -30,8 +28,6 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
 .conn-dot.green{background:var(--g400)}
 .conn-dot.red{background:var(--r400)}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-
-/* ALERT BANNER */
 .alert-wrap{margin-bottom:1rem;display:flex;flex-direction:column;gap:6px}
 .alert{display:flex;align-items:center;gap:10px;padding:.75rem 1rem;border-radius:10px;font-size:13px;font-weight:500;animation:slideIn .3s ease}
 @keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
@@ -39,20 +35,14 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
 .alert.success{background:#ECFDF5;border:1px solid #6EE7B7;color:#065F46}
 .alert.info{background:#EFF6FF;border:1px solid #93C5FD;color:#1E40AF}
 .alert-icon{font-size:18px}
-
-/* STATS */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem}
 .stat{background:#fff;border:1px solid #d4e6b5;border-radius:10px;padding:.875rem 1rem}
 .stat-ico{font-size:18px;color:var(--g400);margin-bottom:5px}
 .stat-label{font-size:11px;color:var(--g600);margin-bottom:3px;font-weight:500}
 .stat-val{font-size:20px;font-weight:500;color:var(--g900)}
 .stat-unit{font-size:12px;color:var(--g600);font-weight:400}
-
-/* SECTION */
 .sec-label{font-size:11px;font-weight:600;color:var(--g600);letter-spacing:.06em;margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
 .sec-label::after{content:'';flex:1;height:1px;background:#d4e6b5}
-
-/* SECTORS */
 .sectors{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
 .scard{background:#fff;border:1px solid #d4e6b5;border-radius:12px;overflow:hidden;transition:border-color .3s}
 .scard.disconnected{border-color:#f7c1c1;opacity:.85}
@@ -70,7 +60,6 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
 .scard-status.disconnected{background:#fff0f0;color:var(--r600)}
 .scard-lastseen{font-size:10px;color:var(--g400)}
 .scard-body{padding:.5rem .875rem}
-
 .srow{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f5e8}
 .srow:last-child{border-bottom:none}
 .srow-name{font-size:12px;color:var(--g600);display:flex;align-items:center;gap:5px}
@@ -83,22 +72,20 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
 .tog.on{background:var(--g600);color:#fff;border-color:var(--g600)}
 .tog:disabled{opacity:.4;cursor:not-allowed}
 .no-signal{font-size:12px;color:var(--g400);padding:12px 0;text-align:center;font-style:italic}
-
-/* SCHEDULE */
 .sched-wrap{background:#fff;border:1px solid #d4e6b5;border-radius:12px;padding:1rem;margin-bottom:1rem}
 .sched-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:.875rem}
 .sbtn{padding:10px 0;border:1px solid #c0dd97;border-radius:8px;background:#fff;color:var(--g800);font-size:13px;font-weight:500;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .15s}
 .sbtn:hover{background:var(--g50)}
 .sbtn.active{background:var(--g600);color:#fff;border-color:var(--g600)}
+.sbtn:disabled{opacity:.5;cursor:not-allowed}
 .sbtn-sub{font-size:11px;color:var(--g400);font-weight:400}
 .sbtn.active .sbtn-sub{color:#c0dd97}
 .sched-info-box{background:var(--g50);border:1px solid #c0dd97;border-radius:8px;padding:.75rem 1rem;font-size:13px;color:var(--g800);display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:.75rem}
-.stop-btn{border:1px solid #c0dd97;border-radius:6px;padding:4px 12px;font-size:12px;color:var(--g600);background:#fff;cursor:pointer}
+.stop-btn{border:1px solid #c0dd97;border-radius:6px;padding:4px 12px;font-size:12px;color:var(--g600);background:#fff;cursor:pointer;transition:all .15s}
 .stop-btn:hover{background:var(--g50)}
+.stop-btn:disabled{opacity:.5;cursor:not-allowed}
 .prog-outer{height:6px;background:#eef5e3;border-radius:4px;overflow:hidden}
 .prog-inner{height:6px;border-radius:4px;background:var(--g400);transition:width .8s linear}
-
-/* LOG */
 .log-wrap{background:#fff;border:1px solid #d4e6b5;border-radius:12px;padding:1rem}
 .lrow{display:flex;gap:10px;padding:5px 0;font-size:12px;border-bottom:1px solid #f0f5e8}
 .lrow:last-child{border-bottom:none}
@@ -112,7 +99,6 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
 <body>
 <div class="wrap">
 
-<!-- HEADER -->
 <div class="hdr">
   <div class="hdr-left">
     <div class="hdr-icon"><i class="ti ti-plant-2"></i></div>
@@ -127,10 +113,8 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
   </div>
 </div>
 
-<!-- ALERT BANNERS -->
 <div class="alert-wrap" id="alert-wrap"></div>
 
-<!-- STATS -->
 <div class="sec-label">UMUMIY KO'RSATKICHLAR</div>
 <div class="stats">
   <div class="stat"><div class="stat-ico"><i class="ti ti-thermometer"></i></div><div class="stat-label">O'rtacha harorat</div><div class="stat-val" id="s-avg">—<span class="stat-unit">°C</span></div></div>
@@ -139,7 +123,6 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
   <div class="stat"><div class="stat-ico" style="color:var(--a400)"><i class="ti ti-wind"></i></div><div class="stat-label">Yoniq ventilyator</div><div class="stat-val" id="s-on" style="color:var(--a600)">0<span class="stat-unit">/8</span></div></div>
 </div>
 
-<!-- SECTORS -->
 <div class="sec-label">SEKTORLAR</div>
 <div class="sectors">
   <div class="scard" id="card-a">
@@ -166,7 +149,6 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
   </div>
 </div>
 
-<!-- SCHEDULE -->
 <div class="sec-label">JADVAL BOSHQARUVI</div>
 <div class="sched-wrap">
   <div class="sched-btns">
@@ -197,7 +179,6 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
   </div>
 </div>
 
-<!-- LOG -->
 <div class="sec-label">HODISALAR</div>
 <div class="log-wrap"><div id="log-list"><div class="lrow"><span class="lmsg" style="color:var(--g400)">Server ulanishi kutilmoqda...</span></div></div></div>
 
@@ -208,19 +189,18 @@ const WS_URL = `wss://${location.host}`;
 const TMIN=20, TMAX=36;
 const logs=[];
 
-// Holat
 let espState = {
   esp1: { temps:[null,null,null,null], relays:[false,false,false,false], lastSeen:null, autonomous:false, connected:false },
   esp2: { temps:[null,null,null,null], relays:[false,false,false,false], lastSeen:null, autonomous:false, connected:false }
 };
 
-// Jadval
 let schedMin=0, schedStart=0, schedVentsOn=false, schedActive=false, progTimer=null;
+let schedLoading = false;
 
-// Alertlar
-let alerts = { esp1:'', esp2:'' };
+function ts(){
+  return new Date().toLocaleTimeString('uz',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
 
-function ts(){ return new Date().toLocaleTimeString('uz',{hour:'2-digit',minute:'2-digit',second:'2-digit'}) }
 function addLog(msg, type=''){
   logs.unshift({t:ts(), msg, type});
   if(logs.length>12) logs.pop();
@@ -244,7 +224,6 @@ function renderSectors(){
     const seenEl = document.getElementById('seen-'+sec);
     const sensEl = document.getElementById('sens-'+sec);
 
-    // Karta holati
     if(!d.connected){
       card.className='scard disconnected';
       hdr.className='scard-hdr disconnected';
@@ -272,11 +251,11 @@ function renderSectors(){
     const a = avg(d.temps);
     avgEl.textContent = a!==null ? a.toFixed(1)+'°C' : '—°C';
     avgEl.style.color = a!==null ? tColor(a) : '#639922';
-    seenEl.textContent = d.lastSeen ? d.lastSeen : '';
+    seenEl.textContent = d.lastSeen || '';
 
     sensEl.innerHTML = d.temps.map((t,i) => {
       if(t===null) return '';
-      const disabled = d.autonomous ? 'disabled title="Avtonom rejimda boshqarib bo\'lmaydi"' : '';
+      const disabled = d.autonomous ? 'disabled' : '';
       return `<div class="srow">
         <span class="srow-name"><i class="ti ti-thermometer" style="font-size:12px;color:#639922"></i>Datchik ${i+1}</span>
         <div class="srow-right">
@@ -288,7 +267,6 @@ function renderSectors(){
     }).join('');
   });
 
-  // Umumiy stats
   const allTemps = [...espState.esp1.temps,...espState.esp2.temps].filter(x=>x!==null);
   if(allTemps.length){
     const a=avg(allTemps);
@@ -303,23 +281,15 @@ function renderSectors(){
 function renderAlerts(){
   const wrap = document.getElementById('alert-wrap');
   const items = [];
-
   ['esp1','esp2'].forEach(key => {
     const sektor = key==='esp1' ? 'A' : 'B';
     const d = espState[key];
     if(!d.connected && d.lastSeen){
-      items.push(`<div class="alert warn">
-        <i class="ti ti-wifi-off alert-icon"></i>
-        <span><b>Sektor ${sektor} aloqa uzildi</b> — ESP avtonom 15 daqiqalik rejimda ishlayapti</span>
-      </div>`);
+      items.push(`<div class="alert warn"><i class="ti ti-wifi-off alert-icon"></i><span><b>Sektor ${sektor} aloqa uzildi</b> — ESP avtonom 15 daqiqalik rejimda</span></div>`);
     } else if(d.autonomous){
-      items.push(`<div class="alert info">
-        <i class="ti ti-refresh alert-icon"></i>
-        <span><b>Sektor ${sektor} avtonom rejimda</b> — ventilyatorlar 15 daqiqalik jadvalda ishlayapti</span>
-      </div>`);
+      items.push(`<div class="alert info"><i class="ti ti-refresh alert-icon"></i><span><b>Sektor ${sektor} avtonom rejimda</b></span></div>`);
     }
   });
-
   wrap.innerHTML = items.join('');
 }
 
@@ -327,9 +297,9 @@ function showReconnectAlert(sektor){
   const wrap = document.getElementById('alert-wrap');
   const div = document.createElement('div');
   div.className='alert success';
-  div.innerHTML=`<i class="ti ti-wifi alert-icon"></i><span><b>Sektor ${sektor} aloqa tiklandi!</b> — Endi boshqarishingiz mumkin</span>`;
+  div.innerHTML=`<i class="ti ti-wifi alert-icon"></i><span><b>Sektor ${sektor} aloqa tiklandi!</b> — Boshqarishingiz mumkin</span>`;
   wrap.prepend(div);
-  addLog(`Sektor ${sektor} aloqa tiklandi — boshqarishingiz mumkin`, 'good');
+  addLog(`Sektor ${sektor} aloqa tiklandi`, 'good');
   setTimeout(()=>{ div.remove(); renderAlerts(); }, 5000);
 }
 
@@ -339,27 +309,10 @@ function renderLogs(){
     '<div class="lrow"><span class="lmsg" style="color:var(--g400)">Hozircha hodisa yo\'q</span></div>';
 }
 
-function toggleRelay(esp, index, state){
-  fetch('/api/relay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({esp,index,state})});
-  addLog(`Sektor ${esp===1?'A':'B'} — Ventilyator ${index+1} ${state?'YONDIRILDI':'O\'CHIRILDI'}`, state?'good':'');
-}
-
-let schedLoading = false;
-
-function setSchedBtnsDisabled(val){
-  ['btn-15','btn-25','btn-40'].forEach(id=>{
-    const b = document.getElementById(id);
-    b.disabled = val;
-    b.style.opacity = val ? '0.5' : '1';
-    b.style.cursor = val ? 'not-allowed' : 'pointer';
-  });
-  const sb = document.getElementById('stop-btn');
-  sb.disabled = val;
-  sb.style.opacity = val ? '0.5' : '1';
-}
-
-function applySchedUI(sc){
-  if(sc && sc.active){
+// Jadval UI ni serverdan olingan holat bilan yangilash
+function applySchedState(sc){
+  if(!sc) return;
+  if(sc.active){
     schedMin = sc.interval;
     schedStart = sc.startTime || Date.now();
     schedVentsOn = sc.ventsOn;
@@ -368,36 +321,45 @@ function applySchedUI(sc){
     document.getElementById('btn-'+sc.interval).classList.add('active');
     document.getElementById('stop-btn').style.display = 'block';
     document.getElementById('prog-outer').style.display = 'block';
-    if(progTimer) clearInterval(progTimer);
-    progTimer = setInterval(updateProg, 1000);
+    if(!progTimer) progTimer = setInterval(updateProg, 1000);
   } else {
     schedActive = false;
-    if(progTimer) clearInterval(progTimer);
+    if(progTimer){ clearInterval(progTimer); progTimer=null; }
     ['btn-15','btn-25','btn-40'].forEach(id=>document.getElementById(id).classList.remove('active'));
     document.getElementById('stop-btn').style.display = 'none';
     document.getElementById('prog-outer').style.display = 'none';
-    document.getElementById('sched-info').textContent = 'Jadval toxtatildi';
+    document.getElementById('prog-inner').style.width = '0%';
+    document.getElementById('sched-info').textContent = 'Jadval tanlanmagan — tugmani bosing';
   }
+}
+
+function setBtnsDisabled(val){
+  ['btn-15','btn-25','btn-40'].forEach(id=>{
+    document.getElementById(id).disabled = val;
+  });
+  document.getElementById('stop-btn').disabled = val;
+}
+
+function toggleRelay(esp, index, state){
+  fetch('/api/relay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({esp,index,state})});
+  addLog(`Sektor ${esp===1?'A':'B'} — Ventilyator ${index+1} ${state?'YONDIRILDI':'O\'CHIRILDI'}`, state?'good':'');
 }
 
 function startSched(min){
   if(schedLoading) return;
   schedLoading = true;
-  setSchedBtnsDisabled(true);
+  setBtnsDisabled(true);
   document.getElementById('sched-info').textContent = 'Yuklanmoqda...';
 
-  fetch('/api/schedule', {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({action:'start', interval:min})
-  })
-  .then(r => r.json())
-  .then(data => {
-    if(data.status === 'ok'){
+  fetch('/api/schedule',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'start',interval:min})})
+  .then(r=>r.json())
+  .then(data=>{
+    if(data.status==='ok'){
       addLog(`Jadval (${min} daqiqa) boshlandi`, 'good');
-      // UI ni server tasdiqlashi bilan WebSocket yangilaydi
+      // Serverdan yangi holatni olamiz va UI yangilanadi
+      fetch('/api/status').then(r=>r.json()).then(s=>{ applySchedState(s.schedule); });
     } else {
-      addLog('Jadval xato: ' + (data.message||''), 'err');
+      addLog('Xato yuz berdi', 'err');
       document.getElementById('sched-info').textContent = 'Xato — qayta urining';
     }
   })
@@ -406,7 +368,7 @@ function startSched(min){
     document.getElementById('sched-info').textContent = 'Xato — qayta urining';
   })
   .finally(()=>{
-    setSchedBtnsDisabled(false);
+    setBtnsDisabled(false);
     schedLoading = false;
   });
 }
@@ -414,21 +376,17 @@ function startSched(min){
 function stopSched(){
   if(schedLoading) return;
   schedLoading = true;
-  setSchedBtnsDisabled(true);
+  setBtnsDisabled(true);
   document.getElementById('sched-info').textContent = 'Toxtatilmoqda...';
 
-  fetch('/api/schedule', {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({action:'stop'})
-  })
-  .then(r => r.json())
-  .then(data => {
-    if(data.status === 'ok'){
+  fetch('/api/schedule',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'stop'})})
+  .then(r=>r.json())
+  .then(data=>{
+    if(data.status==='ok'){
       addLog('Jadval toxtatildi');
-      // UI ni WebSocket yangilaydi
+      fetch('/api/status').then(r=>r.json()).then(s=>{ applySchedState(s.schedule); });
     } else {
-      addLog('Toxtatish xato', 'err');
+      addLog('Xato yuz berdi', 'err');
       document.getElementById('sched-info').textContent = 'Xato — qayta urining';
     }
   })
@@ -437,7 +395,7 @@ function stopSched(){
     document.getElementById('sched-info').textContent = 'Xato — qayta urining';
   })
   .finally(()=>{
-    setSchedBtnsDisabled(false);
+    setBtnsDisabled(false);
     schedLoading = false;
   });
 }
@@ -452,13 +410,35 @@ function updateProg(){
     `Ventilyatorlar ${schedVentsOn?'YONIQ':"O'CHIQ"} — ${schedVentsOn?"o'chishga":'yonishga'} ${m}:${s.toString().padStart(2,'0')} qoldi`;
 }
 
+// Har 2 sekundda serverdan holat olish
+setInterval(()=>{
+  fetch('/api/status')
+  .then(r=>r.json())
+  .then(s=>{
+    if(s.schedule) applySchedState(s.schedule);
+    if(s.sensorData){
+      ['esp1','esp2'].forEach(key=>{
+        if(s.sensorData[key]){
+          espState[key] = {
+            ...espState[key],
+            ...s.sensorData[key],
+            connected: s.sensorData[key].connected !== undefined ? s.sensorData[key].connected : espState[key].connected
+          };
+        }
+      });
+      renderSectors();
+      renderAlerts();
+    }
+  })
+  .catch(()=>{});
+}, 2000);
+
 // WebSocket
 function connectWS(){
   const ws = new WebSocket(WS_URL);
 
   ws.onopen = () => {
-    const pill=document.getElementById('conn-pill');
-    pill.className='conn-pill ok';
+    document.getElementById('conn-pill').className='conn-pill ok';
     document.getElementById('conn-dot').className='conn-dot green';
     document.getElementById('conn-text').textContent='Server ulangan';
     addLog('Server ga ulandi', 'good');
@@ -479,15 +459,13 @@ function connectWS(){
             relays: d[key].relays || espState[key].relays,
             lastSeen: d[key].lastSeen || espState[key].lastSeen,
             autonomous: d[key].autonomous || false,
-            connected: true
+            connected: d[key].connected !== undefined ? d[key].connected : true
           };
           if(!wasConnected && espState[key].connected){
-            const sektor = key==='esp1'?'A':'B';
-            showReconnectAlert(sektor);
+            showReconnectAlert(key==='esp1'?'A':'B');
           }
           if(!wasAutonomous && espState[key].autonomous){
-            const sektor = key==='esp1'?'A':'B';
-            addLog(`Sektor ${sektor} avtonom 15 daqiqalik rejimga o'tdi`, 'warn');
+            addLog(`Sektor ${key==='esp1'?'A':'B'} avtonom rejimga o'tdi`, 'warn');
           }
         }
       });
@@ -501,8 +479,10 @@ function connectWS(){
       const wasConnected = espState[key].connected;
       espState[key].connected = msg.connected;
       if(!msg.connected){
-        addLog(`Sektor ${sektor} aloqa uzildi — avtonom rejimda`, 'err');
+        espState[key].autonomous = true;
+        addLog(`Sektor ${sektor} aloqa uzildi`, 'err');
       } else if(!wasConnected){
+        espState[key].autonomous = false;
         showReconnectAlert(sektor);
       }
       renderSectors();
@@ -510,14 +490,12 @@ function connectWS(){
     }
 
     if(msg.type === 'schedule'){
-      const sc = msg.data;
-      applySchedUI(sc);
+      applySchedState(msg.data);
     }
   };
 
   ws.onclose = () => {
-    const pill=document.getElementById('conn-pill');
-    pill.className='conn-pill err';
+    document.getElementById('conn-pill').className='conn-pill err';
     document.getElementById('conn-dot').className='conn-dot red';
     document.getElementById('conn-text').textContent='Uzildi — qayta ulanmoqda...';
     addLog('Server bilan aloqa uzildi', 'err');
