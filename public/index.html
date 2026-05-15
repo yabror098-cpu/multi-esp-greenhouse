@@ -16,7 +16,7 @@
 }
 body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-height:100vh}
 .wrap{max-width:960px;margin:0 auto;padding:1.25rem}
- 
+
 /* HEADER */
 .hdr{display:flex;align-items:center;justify-content:space-between;padding-bottom:1rem;margin-bottom:1rem;border-bottom:1px solid #d4e6b5}
 .hdr-left{display:flex;align-items:center;gap:10px}
@@ -30,7 +30,7 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
 .conn-dot.green{background:var(--g400)}
 .conn-dot.red{background:var(--r400)}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
- 
+
 /* ALERT BANNER */
 .alert-wrap{margin-bottom:1rem;display:flex;flex-direction:column;gap:6px}
 .alert{display:flex;align-items:center;gap:10px;padding:.75rem 1rem;border-radius:10px;font-size:13px;font-weight:500;animation:slideIn .3s ease}
@@ -39,7 +39,7 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
 .alert.success{background:#ECFDF5;border:1px solid #6EE7B7;color:#065F46}
 .alert.info{background:#EFF6FF;border:1px solid #93C5FD;color:#1E40AF}
 .alert-icon{font-size:18px}
- 
+
 /* STATS */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem}
 .stat{background:#fff;border:1px solid #d4e6b5;border-radius:10px;padding:.875rem 1rem}
@@ -47,11 +47,11 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
 .stat-label{font-size:11px;color:var(--g600);margin-bottom:3px;font-weight:500}
 .stat-val{font-size:20px;font-weight:500;color:var(--g900)}
 .stat-unit{font-size:12px;color:var(--g600);font-weight:400}
- 
+
 /* SECTION */
 .sec-label{font-size:11px;font-weight:600;color:var(--g600);letter-spacing:.06em;margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
 .sec-label::after{content:'';flex:1;height:1px;background:#d4e6b5}
- 
+
 /* SECTORS */
 .sectors{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
 .scard{background:#fff;border:1px solid #d4e6b5;border-radius:12px;overflow:hidden;transition:border-color .3s}
@@ -70,7 +70,7 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
 .scard-status.disconnected{background:#fff0f0;color:var(--r600)}
 .scard-lastseen{font-size:10px;color:var(--g400)}
 .scard-body{padding:.5rem .875rem}
- 
+
 .srow{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f5e8}
 .srow:last-child{border-bottom:none}
 .srow-name{font-size:12px;color:var(--g600);display:flex;align-items:center;gap:5px}
@@ -83,7 +83,7 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
 .tog.on{background:var(--g600);color:#fff;border-color:var(--g600)}
 .tog:disabled{opacity:.4;cursor:not-allowed}
 .no-signal{font-size:12px;color:var(--g400);padding:12px 0;text-align:center;font-style:italic}
- 
+
 /* SCHEDULE */
 .sched-wrap{background:#fff;border:1px solid #d4e6b5;border-radius:12px;padding:1rem;margin-bottom:1rem}
 .sched-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:.875rem}
@@ -97,7 +97,7 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
 .stop-btn:hover{background:var(--g50)}
 .prog-outer{height:6px;background:#eef5e3;border-radius:4px;overflow:hidden}
 .prog-inner{height:6px;border-radius:4px;background:var(--g400);transition:width .8s linear}
- 
+
 /* LOG */
 .log-wrap{background:#fff;border:1px solid #d4e6b5;border-radius:12px;padding:1rem}
 .lrow{display:flex;gap:10px;padding:5px 0;font-size:12px;border-bottom:1px solid #f0f5e8}
@@ -111,7 +111,7 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
 </head>
 <body>
 <div class="wrap">
- 
+
 <!-- HEADER -->
 <div class="hdr">
   <div class="hdr-left">
@@ -126,10 +126,10 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
     <span id="conn-text">Ulanmoqda...</span>
   </div>
 </div>
- 
+
 <!-- ALERT BANNERS -->
 <div class="alert-wrap" id="alert-wrap"></div>
- 
+
 <!-- STATS -->
 <div class="sec-label">UMUMIY KO'RSATKICHLAR</div>
 <div class="stats">
@@ -138,7 +138,7 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
   <div class="stat"><div class="stat-ico" style="color:var(--t400)"><i class="ti ti-arrow-down"></i></div><div class="stat-label">Eng past</div><div class="stat-val" id="s-min" style="color:var(--t600)">—<span class="stat-unit">°C</span></div></div>
   <div class="stat"><div class="stat-ico" style="color:var(--a400)"><i class="ti ti-wind"></i></div><div class="stat-label">Yoniq ventilyator</div><div class="stat-val" id="s-on" style="color:var(--a600)">0<span class="stat-unit">/8</span></div></div>
 </div>
- 
+
 <!-- SECTORS -->
 <div class="sec-label">SEKTORLAR</div>
 <div class="sectors">
@@ -165,7 +165,7 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
     <div class="scard-body" id="sens-b"><div class="no-signal">Signal kutilmoqda...</div></div>
   </div>
 </div>
- 
+
 <!-- SCHEDULE -->
 <div class="sec-label">JADVAL BOSHQARUVI</div>
 <div class="sched-wrap">
@@ -196,42 +196,42 @@ body{font-family:system-ui,sans-serif;background:#f0f4eb;color:#173404;min-heigh
     <div class="prog-inner" id="prog-inner" style="width:0%"></div>
   </div>
 </div>
- 
+
 <!-- LOG -->
 <div class="sec-label">HODISALAR</div>
 <div class="log-wrap"><div id="log-list"><div class="lrow"><span class="lmsg" style="color:var(--g400)">Server ulanishi kutilmoqda...</span></div></div></div>
- 
+
 </div>
- 
+
 <script>
 const WS_URL = `wss://${location.host}`;
 const TMIN=20, TMAX=36;
 const logs=[];
- 
+
 // Holat
 let espState = {
   esp1: { temps:[null,null,null,null], relays:[false,false,false,false], lastSeen:null, autonomous:false, connected:false },
   esp2: { temps:[null,null,null,null], relays:[false,false,false,false], lastSeen:null, autonomous:false, connected:false }
 };
- 
+
 // Jadval
 let schedMin=0, schedStart=0, schedVentsOn=false, schedActive=false, progTimer=null;
- 
+
 // Alertlar
 let alerts = { esp1:'', esp2:'' };
- 
+
 function ts(){ return new Date().toLocaleTimeString('uz',{hour:'2-digit',minute:'2-digit',second:'2-digit'}) }
 function addLog(msg, type=''){
   logs.unshift({t:ts(), msg, type});
   if(logs.length>12) logs.pop();
   renderLogs();
 }
- 
+
 function avg(arr){ const v=arr.filter(x=>x!==null); return v.length ? v.reduce((a,b)=>a+b,0)/v.length : null }
 function tColor(t){ return t>=30?'#A32D2D':t>=27?'#854F0B':'#27500A' }
 function tBarColor(t){ return t>=30?'#E24B4A':t>=27?'#EF9F27':'#639922' }
 function tBarPct(t){ return Math.round(((t-TMIN)/(TMAX-TMIN))*100) }
- 
+
 function renderSectors(){
   ['esp1','esp2'].forEach(key => {
     const sec = key==='esp1' ? 'a' : 'b';
@@ -243,7 +243,7 @@ function renderSectors(){
     const avgEl = document.getElementById('avg-'+sec);
     const seenEl = document.getElementById('seen-'+sec);
     const sensEl = document.getElementById('sens-'+sec);
- 
+
     // Karta holati
     if(!d.connected){
       card.className='scard disconnected';
@@ -256,7 +256,7 @@ function renderSectors(){
       seenEl.textContent = d.lastSeen ? 'Oxirgi: '+d.lastSeen : '';
       return;
     }
- 
+
     if(d.autonomous){
       card.className='scard autonomous';
       hdr.className='scard-hdr autonomous';
@@ -268,12 +268,12 @@ function renderSectors(){
       statusEl.className='scard-status normal';
       statusEl.textContent='Normal';
     }
- 
+
     const a = avg(d.temps);
     avgEl.textContent = a!==null ? a.toFixed(1)+'°C' : '—°C';
-    avgEl.style.color = a!==null ? tColor(a) : 'var(--g600)';
+    avgEl.style.color = a!==null ? tColor(a) : '#639922';
     seenEl.textContent = d.lastSeen ? d.lastSeen : '';
- 
+
     sensEl.innerHTML = d.temps.map((t,i) => {
       if(t===null) return '';
       const disabled = d.autonomous ? 'disabled title="Avtonom rejimda boshqarib bo\'lmaydi"' : '';
@@ -287,7 +287,7 @@ function renderSectors(){
       </div>`;
     }).join('');
   });
- 
+
   // Umumiy stats
   const allTemps = [...espState.esp1.temps,...espState.esp2.temps].filter(x=>x!==null);
   if(allTemps.length){
@@ -299,11 +299,11 @@ function renderSectors(){
   const onN=[...espState.esp1.relays,...espState.esp2.relays].filter(Boolean).length;
   document.getElementById('s-on').innerHTML=onN+'<span class="stat-unit">/8</span>';
 }
- 
+
 function renderAlerts(){
   const wrap = document.getElementById('alert-wrap');
   const items = [];
- 
+
   ['esp1','esp2'].forEach(key => {
     const sektor = key==='esp1' ? 'A' : 'B';
     const d = espState[key];
@@ -319,10 +319,10 @@ function renderAlerts(){
       </div>`);
     }
   });
- 
+
   wrap.innerHTML = items.join('');
 }
- 
+
 function showReconnectAlert(sektor){
   const wrap = document.getElementById('alert-wrap');
   const div = document.createElement('div');
@@ -332,41 +332,90 @@ function showReconnectAlert(sektor){
   addLog(`Sektor ${sektor} aloqa tiklandi — boshqarishingiz mumkin`, 'good');
   setTimeout(()=>{ div.remove(); renderAlerts(); }, 5000);
 }
- 
+
 function renderLogs(){
   document.getElementById('log-list').innerHTML = logs.length ?
     logs.map(l=>`<div class="lrow"><span class="ltime">${l.t}</span><span class="lmsg ${l.type}">${l.msg}</span></div>`).join('') :
     '<div class="lrow"><span class="lmsg" style="color:var(--g400)">Hozircha hodisa yo\'q</span></div>';
 }
- 
+
 function toggleRelay(esp, index, state){
   fetch('/api/relay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({esp,index,state})});
   addLog(`Sektor ${esp===1?'A':'B'} — Ventilyator ${index+1} ${state?'YONDIRILDI':'O\'CHIRILDI'}`, state?'good':'');
 }
- 
+
+let schedLoading = false;
+
 function startSched(min){
-  fetch('/api/schedule',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'start',interval:min})});
-  schedMin=min; schedStart=Date.now(); schedVentsOn=true; schedActive=true;
-  ['btn-15','btn-25','btn-40'].forEach(id=>document.getElementById(id).classList.remove('active'));
-  document.getElementById('btn-'+min).classList.add('active');
-  document.getElementById('stop-btn').style.display='block';
-  document.getElementById('prog-outer').style.display='block';
-  addLog(`Jadval (${min} daqiqa) boshlandi — barcha ventilyatorlar YONDI`, 'good');
-  if(progTimer) clearInterval(progTimer);
-  progTimer=setInterval(updateProg,1000);
+  if(schedLoading) return;
+  schedLoading = true;
+
+  // Tugmalarni o'chirib qo'y
+  ['btn-15','btn-25','btn-40'].forEach(id=>{
+    document.getElementById(id).disabled = true;
+    document.getElementById(id).style.opacity = '0.5';
+  });
+  document.getElementById('sched-info').textContent = 'Yuklanmoqda...';
+
+  fetch('/api/schedule',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'start',interval:min})})
+  .then(r=>r.json())
+  .then(data=>{
+    if(data.status === 'ok'){
+      schedMin=min; schedStart=Date.now(); schedVentsOn=true; schedActive=true;
+      ['btn-15','btn-25','btn-40'].forEach(id=>document.getElementById(id).classList.remove('active'));
+      document.getElementById('btn-'+min).classList.add('active');
+      document.getElementById('stop-btn').style.display='block';
+      document.getElementById('prog-outer').style.display='block';
+      addLog(`Jadval (${min} daqiqa) boshlandi — barcha ventilyatorlar YONDI`, 'good');
+      if(progTimer) clearInterval(progTimer);
+      progTimer=setInterval(updateProg,1000);
+    }
+  })
+  .catch(()=>{
+    addLog('Xato: server ga ulanmadi', 'err');
+    document.getElementById('sched-info').textContent = 'Xato yuz berdi — qayta urining';
+  })
+  .finally(()=>{
+    ['btn-15','btn-25','btn-40'].forEach(id=>{
+      document.getElementById(id).disabled = false;
+      document.getElementById(id).style.opacity = '1';
+    });
+    schedLoading = false;
+  });
 }
- 
+
 function stopSched(){
-  fetch('/api/schedule',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'stop'})});
-  schedActive=false;
-  if(progTimer) clearInterval(progTimer);
-  ['btn-15','btn-25','btn-40'].forEach(id=>document.getElementById(id).classList.remove('active'));
-  document.getElementById('stop-btn').style.display='none';
-  document.getElementById('prog-outer').style.display='none';
-  document.getElementById('sched-info').textContent='Jadval toxtatildi';
-  addLog('Jadval toxtatildi');
+  if(schedLoading) return;
+  schedLoading = true;
+
+  document.getElementById('stop-btn').disabled = true;
+  document.getElementById('stop-btn').style.opacity = '0.5';
+  document.getElementById('sched-info').textContent = 'To\'xtatilmoqda...';
+
+  fetch('/api/schedule',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'stop'})})
+  .then(r=>r.json())
+  .then(data=>{
+    if(data.status === 'ok'){
+      schedActive=false;
+      if(progTimer) clearInterval(progTimer);
+      ['btn-15','btn-25','btn-40'].forEach(id=>document.getElementById(id).classList.remove('active'));
+      document.getElementById('stop-btn').style.display='none';
+      document.getElementById('prog-outer').style.display='none';
+      document.getElementById('sched-info').textContent='Jadval toxtatildi';
+      addLog('Jadval toxtatildi');
+    }
+  })
+  .catch(()=>{
+    addLog('Xato: server ga ulanmadi', 'err');
+    document.getElementById('sched-info').textContent = 'Xato yuz berdi — qayta urining';
+  })
+  .finally(()=>{
+    document.getElementById('stop-btn').disabled = false;
+    document.getElementById('stop-btn').style.opacity = '1';
+    schedLoading = false;
+  });
 }
- 
+
 function updateProg(){
   if(!schedActive) return;
   const el=(Date.now()-schedStart)/1000, tot=schedMin*60;
@@ -376,11 +425,11 @@ function updateProg(){
   document.getElementById('sched-info').textContent=
     `Ventilyatorlar ${schedVentsOn?'YONIQ':"O'CHIQ"} — ${schedVentsOn?"o'chishga":'yonishga'} ${m}:${s.toString().padStart(2,'0')} qoldi`;
 }
- 
+
 // WebSocket
 function connectWS(){
   const ws = new WebSocket(WS_URL);
- 
+
   ws.onopen = () => {
     const pill=document.getElementById('conn-pill');
     pill.className='conn-pill ok';
@@ -388,10 +437,10 @@ function connectWS(){
     document.getElementById('conn-text').textContent='Server ulangan';
     addLog('Server ga ulandi', 'good');
   };
- 
+
   ws.onmessage = (e) => {
     const msg = JSON.parse(e.data);
- 
+
     if(msg.type === 'sensorData'){
       const d = msg.data;
       ['esp1','esp2'].forEach(key => {
@@ -419,7 +468,7 @@ function connectWS(){
       renderSectors();
       renderAlerts();
     }
- 
+
     if(msg.type === 'connection'){
       const key = msg.esp;
       const sektor = key==='esp1'?'A':'B';
@@ -433,7 +482,7 @@ function connectWS(){
       renderSectors();
       renderAlerts();
     }
- 
+
     if(msg.type === 'schedule'){
       const sc = msg.data;
       if(sc.active){
@@ -448,7 +497,7 @@ function connectWS(){
       }
     }
   };
- 
+
   ws.onclose = () => {
     const pill=document.getElementById('conn-pill');
     pill.className='conn-pill err';
@@ -457,15 +506,14 @@ function connectWS(){
     addLog('Server bilan aloqa uzildi', 'err');
     setTimeout(connectWS, 3000);
   };
- 
+
   ws.onerror = () => {
     document.getElementById('conn-dot').className='conn-dot red';
   };
 }
- 
+
 connectWS();
 addLog('Dashboard yuklandi', 'good');
 </script>
 </body>
 </html>
- 
