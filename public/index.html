@@ -255,7 +255,8 @@ function renderSectors(){
 
     sensEl.innerHTML = d.temps.map((t,i) => {
       if(t===null) return '';
-      const disabled = d.autonomous ? 'disabled' : '';
+      const disabled = d.autonomous ? 'disabled' :
+                       (schedActive && !d.relays[i]) ? 'disabled title="Jadval aktiv — faqat o\'chirish mumkin"' : '';
       return `<div class="srow">
         <span class="srow-name"><i class="ti ti-thermometer" style="font-size:12px;color:#639922"></i>Datchik ${i+1}</span>
         <div class="srow-right">
